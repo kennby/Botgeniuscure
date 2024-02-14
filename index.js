@@ -24,12 +24,12 @@ const rl = createInterface(process.stdin, process.stdout)
 const app = express()
 const port = process.env.PORT || 8080;
 
-say('Senna FG98', {
+say('chonex', {
   font: 'pallet',
   align: 'center',
   gradient: ['red', 'magenta']
 })
-say(`senna-bot By FG98 Ig: @fg98_ff`, {
+say(`chonex By kenn tel: 901447095`, {
   font: 'console',
   align: 'center',
   gradient: ['cyan', 'magenta']
@@ -88,7 +88,7 @@ async function start(file) {
   console.log(chalk.yellow(`💾 Total RAM: ${ramInGB.toFixed(2)} GB`));
   const freeRamInGB = os.freemem() / (1024 * 1024 * 1024);
   console.log(chalk.yellow(`💽 Free RAM: ${freeRamInGB.toFixed(2)} GB`));
-  console.log(chalk.yellow(`📃 Script by FG98`));
+  console.log(chalk.yellow(`📃 Script by kenn`));
 
   const packageJsonPath = path.join(path.dirname(currentFilePath), './package.json');
     try {
