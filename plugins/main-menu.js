@@ -5,48 +5,51 @@ import fetch from 'node-fetch'
 import { xpRange } from '../lib/levelling.js'
 //import { plugins } from '../lib/plugins.js'
 let tags = {
-  'main': 'ACERCA DE',
-  'bebot': 'SUB BOTS',
-  'game': 'JUEGOS',
-  'econ': 'NIVEL & ECONOMIA',
-  'rg': 'REGISTRO',
-  'sticker': 'STICKER',
-  'img': 'IMAGEN',
-  'maker': 'MAKER',
-  'prem': 'PREMIUM',
-  'group': 'GRUPO',
-  'nable': 'EN/DISABLE OPCIONES', 
-  'nime': 'ANIME',
-  'rnime': 'ANIME REACCION',
-  'dl': 'DESCARGAS',
-  'tools': 'TOOLS',
-  'fun': 'FUN',
-  'cmd': 'DATABASE',
-  'nsfw': 'NSFW +18',
-  'ansfw': 'NSFW ANIME', 
-  'owner': 'OWNER', 
-  'advanced': 'AVANZADO',
+  'main': '🌟🌈 𝗔𝗖𝗘𝗥𝗖𝗔 𝗗𝗘',
+  'bebot': '🤖 𝗦𝗨𝗕 𝗕𝗢𝗧𝗦',
+  'game': '🎮 𝗝𝗨𝗘𝗚𝗢𝗦',
+  'econ': '💰 𝗡𝗜𝗩𝗘𝗟 & 𝗘𝗖𝗢𝗡𝗢𝗠𝗜𝗔',
+  'rg': '🔒 𝗥𝗘𝗚𝗜𝗦𝗧𝗥𝗢',
+  'sticker': '🎨 𝗦𝗧𝗜𝗖𝗞𝗘𝗥',
+  'img': '🖼️ 𝗜𝗠𝗔𝗚𝗘𝗡',
+  'maker': '🔧 𝗠𝗔𝗞𝗘𝗥',
+  'prem': '🌟 𝗣𝗥𝗘𝗠𝗜𝗨𝗠',
+  'group': '👥 𝗚𝗥𝗨𝗣𝗢',
+  'nable': '⚙️ 𝗘𝗡/𝗗𝗜𝗦𝗔𝗕𝗟𝗘 𝗢𝗣𝗖𝗜𝗢𝗡𝗘𝗦', 
+  'nime': '🌟 𝗔𝗡𝗜𝗠𝗘',
+  'rnime': '🔄 𝗔𝗡𝗜𝗠𝗘 𝗥𝗘𝗔𝗖𝗖𝗜𝗢𝗡',
+  'dl': '📥 𝗗𝗘𝗦𝗖𝗔𝗥𝗚𝗔𝗦',
+  'tools': '⚒️ 𝗧𝗢𝗢𝗟𝗦',
+  'fun': '😄 𝗙𝗨𝗡',
+  'cmd': '💾 𝗗𝗔𝗧𝗔𝗕𝗔𝗦𝗘',
+  'nsfw': '🔞 𝗡𝗦𝗙𝗪 +18',
+  'ansfw': '🔞🌟 𝗡𝗦𝗙𝗪 𝗔𝗡𝗜𝗠𝗘', 
+  'owner': '👑 𝗢𝗪𝗡𝗘𝗥', 
+  'advanced': '🚀 𝗔𝗩𝗔𝗡𝗭𝗔𝗗𝗢',
 }
 const defaultMenu = {
   before: `
-◈ ━━━━━ *Senna  ┃ ᴮᴼᵀ* ━━━━━ ◈
- 
-👋🏻 Hola! *%name*
-👥 Usuarios : %totalreg
-🟢 Tiempo activo : %muptime
-%sbot
-▢ Descarga *FGWhatsApp*
-• https://fgmods.xyz
+🎨🚀 ¡Bienvenido/a a CHONEX! 🌟
+
+¡Hola, *%name*!
+
+👥 Usuarios Registrados: %totalreg
+⏳ Tiempo Activo: %muptime
+
+💡 *Funcionalidades Disponibles:*
+   - %sbot
+
+👤 Owner: +51902247905
 ────────────
 %readmore
-  ≡ *LISTA DE MENUS*
+  Menu
 
 Ⓟ = Premium
 ⓓ = Diamantes
 `.trimStart(),
-  header: '┌─⊷ *%category*',
-  body: '▢ %cmd %isdiamond %isPremium',
-  footer: '└───────────\n',
+  header: '',
+  body: '',
+  footer: '',
   after: `
 `,
 }
@@ -157,7 +160,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     ], m, rpl)*/
     conn.sendFile(m.chat, pp, 'menu.jpg', text.trim(), m, null, rcanal)
   
-    m.react('📚') 
+    m.react('🦁') 
     
   } catch (e) {
     conn.reply(m.chat, '❎ Lo sentimos, el menú tiene un error', m)
@@ -180,4 +183,4 @@ function clockString(ms) {
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [d, 'd ', h, 'h ', m, 'm '].map(v => v.toString().padStart(2, 0)).join('')
-}
+                 }
