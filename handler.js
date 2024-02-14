@@ -1,4 +1,4 @@
- import { smsg } from './lib/simple.js'
+import { smsg } from './lib/simple.js'
 import { format } from 'util' 
 import { fileURLToPath } from 'url'
 import path, { join } from 'path'
@@ -501,8 +501,8 @@ export async function participantsUpdate({ id, participants, action }) {
             if (chat.welcome) {
                 let groupMetadata = await this.groupMetadata(id) || (conn.chats[id] || {}).metadata
                 for (let user of participants) {
-                    let pp = 'https://i.ibb.co/1ZxrXKJ/avatar-contact.jpg'
-                    let ppgp = 'https://i.ibb.co/1ZxrXKJ/avatar-contact.jpg'
+                    let pp = 'https://telegra.ph/file/07773515818be5331af77.jpg'
+                    let ppgp = 'https://telegra.ph/file/07773515818be5331af77.jpg'
                     try {
                         pp = await this.profilePictureUrl(user, 'image')
                         ppgp = await this.profilePictureUrl(id, 'image')
@@ -516,7 +516,7 @@ export async function participantsUpdate({ id, participants, action }) {
                                 groupicon: ppgp,
                                 membercount: groupMetadata.participants.length,
                                 profile: pp,
-                                background: 'https://i.ibb.co/74Y8XpS/akali.jpg'
+                                background: ''
                             }, 'apikey')
 
                             let lea = API('fgmods', '/api/goodbye2', {
@@ -525,7 +525,7 @@ export async function participantsUpdate({ id, participants, action }) {
                                 groupicon: ppgp,
                                 membercount: groupMetadata.participants.length,
                                 profile: pp,
-                                background: 'https://i.ibb.co/Lkg2TnN/gwe.jpg'
+                                background: ''
                             }, 'apikey')
 
                             this.sendFile(id, action === 'add' ? wel : lea, 'pp.jpg', text, null, false, { mentions: [user] })
