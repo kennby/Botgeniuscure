@@ -1,31 +1,88 @@
-import yts from 'yt-search'
+import fetch from 'node-fetch';
 
-let handler = async (m, { conn, command, text, usedPrefix }) => {
-	
-  if (!text) throw `✳️ Por favor, indica el título de la canción o video que deseas buscar. Ejemplo: *${usedPrefix + command}* Lil Peep hate my life`
-	let res = await yts(text)
-	let vid = res.videos[0]
-	if (!vid) throw `✳️ Vídeo/Audio no encontrado`
-	let { title, description, thumbnail, videoId, timestamp, views, ago, url } = vid
-	//const url = 'https://www.youtube.com/watch?v=' + videoId
-	m.react('🎧') 
-	let play = `
-	*🌟 ¡Reproduciendo! 🌟*
+let data;
+let buff;
+let mimeType;
+let fileName;
+let apiUrl;
+let sending = false;
 
-	*${title}*
-	📆 Publicado: ${ago}
-	⏰ Duración: ${timestamp}
-	👀 Vistas: ${views}
+const handler = async (m, { command, usedPrefix, conn, text }) => {
+    if (!text) throw `Ingrese el nombre o el enlace`;
+    
+    if (sending) return;
+    sending = true;
 
-	🎶 ¡Sintoniza *CHONEX* y disfruta de la música! 🎵`
- await conn.sendButton(m.chat, play, mssg.ig, thumbnail, [
-    ['🎶 MP3', `${usedPrefix}fgmp3 ${url}`],
-    ['🎥 MP4', `${usedPrefix}fgmp4 ${url}`]
-  ], m, rpl)
-}
-handler.help = ['play']
-handler.tags = ['dl']
-handler.command = ['play', 'playvid']
-handler.disabled = true
+    try {
+        const apiUrls = [
+            `https://api.cafirexos.com/api/ytplay?text=${text}`,
+            `https://api.cafirexos.com/api/ytplay?text=${text}`
+        ];
 
-export default handler
+        for (const url of apiUrls) {
+            try {
+                const res = await fetch(url);
+                data = await res.json();
+                if (data.resultado && data.resultado.url) {
+                    break;
+                }
+            } catch {}
+        }
+
+        if (!data.resultado || !data.resultado.url) {
+            sending = false;
+            throw `Error, inténtelo de nuevo.`;
+        } else {
+            try {
+                if (command === 'play') {
+                    apiUrl = `https://api.cafirexos.com/api/v1/ytmp3?url=${data.resultado.url}`;
+                    mimeType = 'audio/mpeg';
+                    fileName = 'error.mp3';
+                    buff = await conn.getFile(apiUrl);
+                } else if (command === 'play2') {
+                    apiUrl = `https://api.cafirexos.com/api/v1/ytmp4?url=${data.resultado.url}`;
+                    mimeType = 'video/mp4';
+                    fileName = 'error.mp4';
+                    buff = await conn.getFile(apiUrl);
+                }
+            } catch {
+                try {
+                    if (command === 'play') {
+                        apiUrl = `https://api.cafirexos.com/api/v1/ytmp3?url=${data.resultado.url}`;
+                        mimeType = 'audio/mpeg';
+                        fileName = 'error.mp3';
+                        buff = await conn.getFile(apiUrl);
+                    } else if (command === 'play2') {
+                        apiUrl = `https://api.cafirexos.com/api/v1/ytmp4?url=${data.resultado.url}`;
+                        mimeType = 'video/mp4';
+                        fileName = 'error.mp4';
+                        buff = await conn.getFile(apiUrl);
+                    }
+                } catch {
+                    sending = false;
+                    throw `Error, inténtelo de nuevo.`;
+                }
+            }
+        }
+
+        const dataMessage = `*Título:* ${data.resultado.title}\n\n*Publicado:* ${data.resultado.publicDate}\n\n*Canal:* ${data.resultado.channel}\n\n*URL:* ${data.resultado.url}`;
+        await conn.sendMessage(m.chat, { text: dataMessage }, { quoted: m });
+
+        if (buff) {
+            await conn.sendMessage(m.chat, {[mimeType.startsWith('audio') ? 'audio' : 'video']: buff.data, mimetype: mimeType, fileName: fileName}, {quoted: m});
+            sending = false;
+        } else {
+            sending = false;
+            throw `Error, inténtelo de nuevo.`;
+        }
+    } catch (error) {
+        sending = false;
+        throw `Error, inténtelo de nuevo.`;
+    }
+};
+
+handler.help = ['play', 'play2'];
+handler.tags = ['descargas']
+handler.command = ['play', 'play2'];
+
+export default handler;
