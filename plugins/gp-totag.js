@@ -1,15 +1,13 @@
-
-let handler = async (m, { conn, text, participants}) => {
-	
+let handler = async (m, { conn, text, participants, isAdmin, isOwner, groupMetadata }) => {
     let users = participants.map(u => u.id).filter(v => v !== conn.user.jid)
-    if (!m.quoted) throw `✳️ ${mssg.reply}`
-    conn.sendMessage(m.chat, { forward: m.quoted.fakeObj, mentions: users } )
+    m.reply(`Grupo: *${groupMetadata.subject}*\nMiembros: *${participants.length}*${text ? `\nMensaje: ${text}\n` : ''}\n*MENCIONES*\n` + users.map(v => '@' + v.replace(/@.+/, '')).join`\n` + '\n', null, {
+        mentions: users
+    })
 }
 
-handler.help = ['totag']
+handler.help = ['todos']
 handler.tags = ['group']
-handler.command = /^(totag|tag)$/i
-
+handler.command = ['todos']
 handler.admin = true
 handler.group = true
 
