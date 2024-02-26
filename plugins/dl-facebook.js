@@ -1,25 +1,43 @@
+import fetch from 'node-fetch';
 
-import fg from 'api-dylux';
-let handler = async (m, { conn, text, args, usedPrefix, command }) => {
-  
-if (!args[0]) throw `✳️ ${mssg.noLink('Facebook')}\n\n📌 ${mssg.example} :\n*${usedPrefix + command}* https://fb.watch/d7nB8-L-gR/`
-  m.react(rwait);
+const handler = async (m, { conn, args }) => {
+    if (!args[0]) throw `Por favor, ingrese un enlace de Facebook.`;
 
-  try {
-    let result = await fg.fbdl(args[0]);
-    let tex = `
-┌─⊷ *FBDL*
-▢ *${mssg.title}:* ${result.title}
-└───────────`;
-    conn.sendFile(m.chat, result.videoUrl, 'fb.mp4', tex, m);
-    m.react(done);
-  } catch (error) {
-    m.reply(mssg.error)
-  }
+    try {
+        const apiUrl = `https://apikasu.onrender.com/api/dowloader/fbdown?url=${args[0]}&apikey=SebastianDevelop`;
+        const response = await fetch(apiUrl);
+
+        if (response.ok) {
+            m.react('⌛');
+
+            const data = await response.json();
+            const videoUrl = data.result.Normal_video;
+
+            const fileName = "fb.mp4";
+
+            const videoResponse = await fetch(videoUrl);
+            const fileBuffer = await videoResponse.buffer();
+
+            conn.sendFile(m.chat, fileBuffer, fileName, "", m);
+
+            m.react('✅');
+        } else {
+            throw `
+> Sin respuesta
+
+No se pudo obtener el contenido de Facebook.`;
+        }
+    } catch (error) {
+        console.error(error);
+        throw `
+> Sin respuesta
+
+Ocurrió un error al descargar el video de Facebook: ${error.message}`;
+    }
 };
-handler.help = ['facebook'].map(v => v + ' <url>');
+
+handler.help = ['facebook'];
 handler.tags = ['dl'];
-handler.command = /^((facebook|fb)(downloder|dl)?)$/i;
-handler.diamond = true;
+handler.command = ['facebook', 'fb'];
 
 export default handler;
