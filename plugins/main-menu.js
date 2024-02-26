@@ -47,9 +47,9 @@ const defaultMenu = {
 Ⓟ = Premium
 ⓓ = Diamantes
 `.trimStart(),
-  header: ' *%category*',
-  body: '• %cmd %isdiamond %isPremium',
-  footer: '',
+  header: '❏–––––『 *%category* 』',
+  body: '┆≼≽ %cmd %isdiamond %isPremium',
+  footer: '❏–––––––––––––––༓',
   after: `
 `,
 }
@@ -151,7 +151,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
     
-    let pp = './src/fg_logo.jpg'
+    let pp = 'https://telegra.ph/file/7a0a09c041f1dd3cb7fb2.jpg'
 
     /*conn.sendButton(m.chat, text.trim(), `▢ DyLux  ┃ ᴮᴼᵀ\n${mssg.ig}`, pp, [
       ['ꨄ︎ Apoyar', `${_p}donate`],
@@ -183,4 +183,4 @@ function clockString(ms) {
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [d, 'd ', h, 'h ', m, 'm '].map(v => v.toString().padStart(2, 0)).join('')
-  }
+      }
