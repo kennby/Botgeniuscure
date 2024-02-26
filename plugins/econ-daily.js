@@ -1,22 +1,26 @@
+//import db from '../lib/database.js'
 
-let free = 1500
-let cooldown = 86400000
-let handler = async (m, {conn}) => {
-  let user = global.db.data.users[m.sender]
-  if (new Date - user.lastclaim < cooldown) throw `🎁 ${mssg.dailyCd} *${msToTime((user.lastclaim + cooldown) - new Date())}*`
-  user.coin += free
+const free = 5000
+const prem = 20000
+
+let handler = async (m, {conn, isPrems }) => {
+  let time = global.db.data.users[m.sender].lastclaim + 86400000
+  if (new Date - global.db.data.users[m.sender].lastclaim < 86400000) throw ` *Ya recogiste tu recompensa diaria*\n\n Vuelve en *${msToTime(time - new Date())}* `
+  global.db.data.users[m.sender].exp += isPrems ? prem : free
   m.reply(`
-🎁 *${mssg.daily.toUpperCase()}*
+> Recompensa diaria
 
-*${mssg.money}* : +${free.toLocaleString()} 🪙`)
-  user.lastclaim = new Date * 1
+*Has recibido:*
+ *XP* : +${isPrems ? prem : free}`)
+  global.db.data.users[m.sender].lastclaim = new Date * 1
 }
-handler.help = ['daily']
+handler.help = ['reclamar']
 handler.tags = ['econ']
-handler.command = ['daily', 'claim'] 
-
+handler.command = ['reclamar', 'claim'] 
 
 export default handler
+
+
 
 function msToTime(duration) {
   var milliseconds = parseInt((duration % 1000) / 100),
@@ -28,5 +32,5 @@ function msToTime(duration) {
   minutes = (minutes < 10) ? "0" + minutes : minutes
   seconds = (seconds < 10) ? "0" + seconds : seconds
 
-  return hours + ` ${mssg.hour} ` + minutes + ` ${mssg.minute}`
+  return hours + " Horas " + minutes + " Minutos"
 }
