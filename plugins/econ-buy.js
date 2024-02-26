@@ -1,38 +1,24 @@
+//import db from '../lib/database.js'
 
-const precioDiamante = 200 
-let handler = async (m, { conn, usedPrefix, command, args }) => {
+const xpperdiamond = 350 
+let handler = async (m, { conn, command, args }) => {
+  let count = command.replace(/^buy/i, '')
+  count = count ? /all/i.test(count) ? Math.floor(global.db.data.users[m.sender].exp / xpperdiamond) : parseInt(count) : args[0] ? parseInt(args[0]) : 1
+  count = Math.max(1, count)
+  if (global.db.data.users[m.sender].exp >= xpperdiamond * count) {
+    global.db.data.users[m.sender].exp -= xpperdiamond * count
+    global.db.data.users[m.sender].diamond += count
+    conn.reply(m.chat, `
+> Recibo de pago
 
-  let user = global.db.data.users[m.sender]
- 
-  if (!args[0]) throw `📌 ${mssg.example}: *${usedPrefix + command}* all\n*${usedPrefix + command}* 8`;
-  if (args[0].toLowerCase() !== 'all' && !/^[1-9]\d*$/.test(args[0])) throw `✳️ ${mssg.isNan}`;
-
-  let all =  Math.floor(user.coin / precioDiamante)
- let count = args[0].replace('all', all)
- count = Math.max(1, count)
-  //if (isNaN(count)) throw `✳️ ${mssg.isNan}`;
-
-  
-  let totalCost = precioDiamante * count;
-
-  if (user.coin >= totalCost) {
-    user.coin -= totalCost;
-    user.diamond += count;
-
-    m.reply(`
-┌─「 *${mssg.voucher.toUpperCase()}* 」
-‣ *${mssg.buy}:* ${mssg.dmd}
-‣ *${mssg.buyCount}:* ${count.toLocaleString()} 💎 
-‣ *${mssg.spent}:* -${totalCost.toLocaleString()} 🪙
-└──────────────`);
-  } else {
-    m.reply(`❎ ${mssg.buyNan('Coins')} *${count}* 💎`);
-  }
-
+*Compra nominal*: + ${count}
+*Gastado*: -${xpperdiamond * count} XP
+`, m)
+  } else conn.reply(m.chat, `Lo siento, no tienes suficientes *XP* para comprar *${count}* Diamantes\n\n Puedes conseguir *XP* usando los comandos del *menú juegos y economía*`, m)
 }
-handler.help = ['buy']
+handler.help = ['buy', 'buyall']
 handler.tags = ['econ']
-handler.command = ['buy'] 
+handler.command = ['buy', 'buyall'] 
 
 handler.disabled = false
 
