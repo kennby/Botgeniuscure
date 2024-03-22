@@ -4,14 +4,14 @@ const handler = async (m, { conn, args }) => {
     if (!args[0]) throw `Por favor, ingrese un enlace de TikTok.`;
 
     try {
-        const apiUrl = `https://apikasu.onrender.com/api/dowloader/tikok?url=${args[0]}&apikey=SebastianDevelop`;
+        const apiUrl = `https://api.lolhuman.xyz/api/tiktok?apikey=Gatadios&url=${encodeURIComponent(args[0])}`;
         const response = await fetch(apiUrl);
 
         if (response.ok) {
-            m.react('⌛');
+            m.reply('Descargando el video, por favor espera...');
 
             const data = await response.json();
-            const videoUrl = data.result.video2;
+            const videoUrl = data.result.link;
 
             const fileName = "tiktok.mp4";
 
@@ -20,7 +20,7 @@ const handler = async (m, { conn, args }) => {
 
             conn.sendFile(m.chat, fileBuffer, fileName, "", m);
 
-            m.react('✅');
+            m.reply('Video descargado correctamente.');
         } else {
             throw `
 > Sin respuesta
