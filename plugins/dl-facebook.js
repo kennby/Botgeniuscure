@@ -4,14 +4,14 @@ const handler = async (m, { conn, args }) => {
     if (!args[0]) throw `Por favor, ingrese un enlace de Facebook.`;
 
     try {
-        const apiUrl = `https://apikasu.onrender.com/api/dowloader/fbdown?url=${args[0]}&apikey=SebastianDevelop`;
+        const apiUrl = `https://api.lolhuman.xyz/api/facebook?apikey=Gatadios&url=${encodeURIComponent(args[0])}`;
         const response = await fetch(apiUrl);
 
         if (response.ok) {
-            m.react('⌛');
+            m.reply('Descargando el video, por favor espera...');
 
             const data = await response.json();
-            const videoUrl = data.result.Normal_video;
+            const videoUrl = data.result[0];
 
             const fileName = "fb.mp4";
 
@@ -20,7 +20,7 @@ const handler = async (m, { conn, args }) => {
 
             conn.sendFile(m.chat, fileBuffer, fileName, "", m);
 
-            m.react('✅');
+            m.reply('Video de Facebook descargado correctamente.');
         } else {
             throw `
 > Sin respuesta
@@ -36,8 +36,8 @@ Ocurrió un error al descargar el video de Facebook: ${error.message}`;
     }
 };
 
-handler.help = ['facebook'];
+handler.help = ['fb'];
 handler.tags = ['dl'];
-handler.command = ['facebook', 'fb'];
+handler.command = ['fb', 'face'];
 
 export default handler;
