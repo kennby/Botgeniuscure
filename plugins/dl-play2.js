@@ -76,7 +76,7 @@ try {
 }
 handler.help = ['play']
 handler.tags = ['dl']
-handler.command = ['play2', 'playvid']
+handler.command = ['play2', 'video']
 
 export default handler
 
