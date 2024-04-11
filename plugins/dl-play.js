@@ -10,7 +10,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
 	//const url = 'https://www.youtube.com/watch?v=' + videoId
 	m.react('🎧') 
 	let play = `
-	≡ *mp3*
+	
 ┌──────────────
 ▢ 📌 *${mssg.title()}* : ${title}
 ▢ 📆 *${mssg.uploud()}:* ${ago}
@@ -24,7 +24,7 @@ let handler = async (m, { conn, command, text, usedPrefix }) => {
 }
 handler.help = ['play']
 handler.tags = ['dl']
-handler.command = ['play', 'musica']
+handler.command = ['play', 'play']
 handler.disabled = true
 
 export default handler
