@@ -39,7 +39,7 @@ const defaultMenu = {
 💡 *Funcionalidades Disponibles:*
    - %sbot
 
-👤 Owner: +51902247905
+👤 Owner: kenn
 ────────────
 %readmore
   Menu
