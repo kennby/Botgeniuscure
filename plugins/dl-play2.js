@@ -1,4 +1,4 @@
-import { youtubeSearch } from '@bochilteam/scraper'
+
 import fetch from 'node-fetch'
 let handler = async (m, { conn, command, text, usedPrefix }) => {
 if (!text) throw `*[❗INFO❗] NOMBRE DE LA CANCION FALTANTE, POR FAVOR INGRESE EL COMANDO MAS EL NOMBRE /TITULO DE UNA CANCION*\n\n*—◉ EJEMPLO:*\n*${usedPrefix + command} Good Feeling - Flo Rida*`
