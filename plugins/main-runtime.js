@@ -9,7 +9,7 @@ let handler = async (m, { conn, args, usedPrefix, command }) => {
       }) * 1000
     }
     let muptime = clockString(_muptime)
-   m.reply(`_*${mssg.uptime}*_  \n\n*${muptime}*`) 
+   m.reply(` *${mssg.uptime}*  \n\n${muptime}`) 
 }
 handler.help = ['runtime'] 
 handler.tags = ['main']
@@ -22,5 +22,4 @@ function clockString(ms) {
   let m = isNaN(ms) ? '--' : Math.floor(ms / 60000) % 60
   let s = isNaN(ms) ? '--' : Math.floor(ms / 1000) % 60
   return [d, 'd ', h, 'h ', m, 'm ', s, 's '].map(v => v.toString().padStart(2, 0)).join('')
-	  }
-
+}
