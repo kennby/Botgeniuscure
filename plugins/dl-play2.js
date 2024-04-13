@@ -1,35 +1,108 @@
-import fetch from 'node-fetch';
+ 
+import yts from 'yt-search'
+import ytdl from 'ytdl-core'
+import fs from 'fs'
+import { pipeline } from 'stream'
+import { promisify } from 'util'
+import os from 'os'
+import fg from 'api-dylux'
+import fetch from 'node-fetch'
+let limit = 320
+let handler = async (m, { conn, text, args, isPrems, isOwner, usedPrefix, command }) => {
+  
+    if (!text) throw `✳️ ${mssg.example} *${usedPrefix + command}* Lil Peep hate my life`
+  let chat = global.db.data.chats[m.chat]
+  let res = await yts(text)
+  //let vid = res.all.find(video => video.seconds < 3600)
+  let vid = res.videos[0]
+  if (!vid) throw `✳️ Vídeo/Audio no encontrado`
+  let isVideo = /vid$/.test(command)
+  m.react('🎧') 
+  
+  let play = `
+	≡ *FG MUSIC*
+┌──────────────
+▢ 📌 *${mssg.title}:* ${vid.title}
+▢ 📆 *${mssg.aploud}:* ${vid.ago}
+▢ ⌚ *${mssg.duration}:* ${vid.timestamp}
+▢ 👀 *${mssg.views}:* ${vid.views.toLocaleString()}
+└──────────────
 
-let handler = async (m, { command, conn, text }) => {
-    if (!text) throw `[❗INFO❗] NOMBRE DE LA CANCION FALTANTE, POR FAVOR INGRESE EL COMANDO MAS EL NOMBRE/TITULO O ENLACE DE ALGUNA CANCION O VIDEO DE YOUTUBE\n\n*—◉ EJEMPLO:\n#play.1 Good Feeling - Flo Rida*`;
+_Enviando..._` 
+conn.sendFile(m.chat, vid.thumbnail, 'play', play, m, null, rcanal)
+  
+  let q = isVideo ? '360p' : '128kbps' 
+try {
+	
+ // let api = await fetch(global.API('fgmods', `/api/downloader/${isVideo ? "ytv" : "yta"}`, { url: vid.url, quality: q}, 'apikey'))
+ // let yt = await api.json()
+  
+   let yt = await (isVideo ? fg.ytv : fg.yta)(vid.url, q)
+  let { title, dl_url, quality, size, sizeB } = yt
+  let isLimit = limit * 1024 < sizeB 
 
-    try {
-        let apikey = 'gatadios'; // Reemplaza 'TU_API_KEY_AQUI' con tu API key
-        let res = await fetch(`https://api.lolhuman.xyz/api/ytplay2?apikey=${apikey}&query=${encodeURIComponent(text)}`);
-        let json = await res.json();
+     await conn.loadingMsg(m.chat, '📥 Descargando', ` ${isLimit ? `≡  *FG YTDL*\n\n▢ *⚖️${mssg.size}*: ${size}\n▢ *🎞️${mssg.quality}*: ${quality}\n\n▢ _${mssg.limitdl}_ *+${limit} MB*` : '✅ Descarga Completada' }`, ["▬▭▭▭▭▭", "▬▬▭▭▭▭", "▬▬▬▭▭▭", "▬▬▬▬▭▭", "▬▬▬▬▬▭", "▬▬▬▬▬▬"], m)
+     
+	  if(!isLimit) conn.sendFile(m.chat, dl_url, title + '.mp' + (3 + /vid$/.test(command)), `
+ ≡  *FG YTDL*
+  
+▢ *📌Título* : ${title}
+▢ *🎞️Calidad* : ${quality}
+▢ *⚖️Peso* : ${size}
+`.trim(), m, false, { mimetype: isVideo ? '' : 'audio/mpeg', asDocument: chat.useDocument })
+		m.react(done) 
+  } catch {
+  try {
+//  let q = isVideo ? '360p' : '128kbps' 
+  let yt = await (isVideo ? fg.ytmp4 : ytmp3)(vid.url, q)
+  let { title, dl_url, quality, size, sizeB} = yt
+  let isLimit = limit * 1024 < sizeB 
 
-        if (json.status == 200 && json.message == "success") {
-            let url = command == 'play.1' ? json.result.audio : json.result.video;
-            let mimetype = command == 'play.1' ? 'audio/mp4' : 'video/mp4';
-
-            if (url) {
-                conn.reply(m.chat, `*_⏳ SE ESTÁ PROCESANDO SU AUDIO/VIDEO...⏳_*`, m);
-                conn.sendFile(m.chat, url, 'media', '', m, false, { mimetype });
-            } else {
-                throw '[❗INFO❗] ERROR: URL del archivo no encontrada en la respuesta de la API';
-            }
-        } else {
-            throw `[❗INFO❗] ERROR: ${json.message}`;
-        }
-    } catch (e) {
-        console.error(e);
-        m.reply('*[❗INFO❗] ERROR, POR FAVOR VUELVA A INTENTARLO*');
+     await conn.loadingMsg(m.chat, '📥 Descargando', ` ${isLimit ? `≡  *FG YTDL*\n\n▢ *⚖️${mssg.size}*: ${size}\n▢ *🎞️${mssg.quality}*: ${quality}\n\n▢ _${mssg.limitdl}_ *+${limit} MB*` : '✅ Descarga Completada' }`, ["▬▭▭▭▭▭", "▬▬▭▭▭▭", "▬▬▬▭▭▭", "▬▬▬▬▭▭", "▬▬▬▬▬▭", "▬▬▬▬▬▬"], m)
+	  if(!isLimit) conn.sendFile(m.chat, dl_url, title + '.mp' + (3 + /2$/.test(command)), `
+ ≡  *FG YTDL 2*
+  
+*📌${mssg.title}* : ${title}
+*🎞️${mssg.quality}* : ${quality}
+*⚖️${mssg.size}* : ${size}
+`.trim(), m, false, { mimetype: isVideo ? '' : 'audio/mpeg', asDocument: chat.useDocument })
+		m.react(done) 
+		
+		 } catch (error) {
+        m.reply(`❎ ${mssg.error}`)
     }
 }
 
-handler.help = ['play.1 <texto>', 'play.2 <texto>'];
-handler.tags = ['downloader'];
-handler.command = ['play.1', 'play.2'];
+}
+handler.help = ['play']
+handler.tags = ['dl']
+handler.command = ['play', 'playvid']
 
-export default handler;
+export default handler
 
+const streamPipeline = promisify(pipeline);
+
+async function ytmp3(url) {
+    const videoInfo = await ytdl.getInfo(url);
+    const { videoDetails } = videoInfo;
+    const { title, thumbnails, lengthSeconds, viewCount, uploadDate } = videoDetails;
+    const thumbnail = thumbnails[0].url;
+    
+    const audioStream = ytdl(url, { filter: 'audioonly', quality: 'highestaudio' });
+    const tmpDir = os.tmpdir();
+    const audioFilePath = `${tmpDir}/${title}.mp3`;
+
+    await streamPipeline(audioStream, fs.createWriteStream(audioFilePath));
+
+    return {
+        title,
+        views: viewCount,
+        publish: uploadDate,
+        duration: lengthSeconds,
+        quality: '128kbps',
+        thumb: thumbnail,
+        size: '0mb', 
+        sizeB: '0', 
+        dl_url: audioFilePath
+    };
+      }
