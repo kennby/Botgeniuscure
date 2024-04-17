@@ -41,7 +41,7 @@ let handler = async (m, {
     return m.reply(Func.jsonFormat(e))
   }
 }
-handler.help = handler.command = ['play']
+handler.help = handler.command = ['musica']
 handler.tags = ['downloader']
 handler.limit = 1
 module.exports = handler
