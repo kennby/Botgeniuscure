@@ -151,7 +151,7 @@ let handler = async (m, { conn, usedPrefix: _p, __dirname }) => {
     }
     text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name])
     
-    let pp = 'https://telegra.ph/file/516ed4b6bf77ca21c083c.mp4'
+    let pp = 'https://qu.ax/QtOM.mp4'
 
     /*conn.sendButton(m.chat, text.trim(), `▢ DyLux  ┃ ᴮᴼᵀ\n${mssg.ig}`, pp, [
       ['ꨄ︎ Apoyar', `${_p}donate`],
