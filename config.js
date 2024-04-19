@@ -25,17 +25,17 @@ global.author = 'kenn'
 
 //--info FG
 global.botName = 'chonx'
-global.fgig = 'https://whatsapp.com/channel/0029VaDajsjLI8YRnDjT2y1v' 
-global.fgsc = 'https://whatsapp.com/channel/0029VaDajsjLI8YRnDjT2y1v' 
-global.fgyt = 'https://whatsapp.com/channel/0029VaDajsjLI8YRnDjT2y1v'
-global.fgpyp = 'https://whatsapp.com/channel/0029VaDajsjLI8YRnDjT2y1v'
+global.fgig = 'https://whatsapp.com/channel/0029VaOXYA76GcGCoumjn41j' 
+global.fgsc = 'https://whatsapp.com/channel/0029VaOXYA76GcGCoumjn41j' 
+global.fgyt = 'https://whatsapp.com/channel/0029VaOXYA76GcGCoumjn41j'
+global.fgpyp = 'https://whatsapp.com/channel/0029VaOXYA76GcGCoumjn41j'
 global.fglog = 'https://telegra.ph/file/829c932a8e1bbf742dcc9.jpg' 
 
 //--- Grupos WA
-global.fgcanal = 'https://whatsapp.com/channel/0029VaDajsjLI8YRnDjT2y1v'
-global.bgp = 'https://whatsapp.com/channel/0029VaDajsjLI8YRnDjT2y1v'
-global.bgp2 = 'https://whatsapp.com/channel/0029VaDajsjLI8YRnDjT2y1v'
-global.bgp3 = 'https://whatsapp.com/channel/0029VaDajsjLI8YRnDjT2y1v' //--GP NSFW
+global.fgcanal = 'https://whatsapp.com/channel/0029VaOXYA76GcGCoumjn41j'
+global.bgp = 'https://whatsapp.com/channel/0029VaOXYA76GcGCoumjn41j'
+global.bgp2 = 'https://whatsapp.com/channel/0029VaOXYA76GcGCoumjn41j'
+global.bgp3 = 'https://whatsapp.com/channel/0029VaOXYA76GcGCoumjn41j' //--GP NSFW
 
 global.wait = '⌛'
 global.rwait = '⌛'
