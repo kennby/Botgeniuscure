@@ -157,7 +157,7 @@ export async function handler(chatUpdate) {
                     delete: true,
                     antiLink: false,
                     viewonce: false,
-                    useDocument: true,
+                    useDocument: false,
                     captcha: false,
                     nsfw: false, 
                     expired: 0,
