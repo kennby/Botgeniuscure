@@ -26,7 +26,13 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
         }
     })
 
-    conn.sendButtonList(m.chat, '  ≡ *FG MUSIC*🔎', `\n 📀 Resultados de:\n *${text}*`, mssg.ig, listSections, true, { quoted: m })
+    let buttons = listSections.flatMap(section => section.rows.map(row => ({
+        buttonId: row.rowId,
+        buttonText: { displayText: row.title },
+        type: 1
+    })))
+
+    await conn.sendMessage(m.chat, '  ≡ *FG MUSIC*🔎\n\n 📀 Resultados de:\n' + text, 'buttonsMessage', { buttons }, m)
 }
 handler.help = ['play2']
 handler.tags = ['dl']
