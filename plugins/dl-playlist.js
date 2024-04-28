@@ -37,7 +37,7 @@ handler.tags = ['dl']
 handler.command = ['play2', 'playvid2', 'playlist', 'playlista']
 
 // Indica si este comando está desactivado
-handler.disabled = true
+handler.disabled = false
 
 // Exporta el manejador para ser utilizado por otros archivos
 export default handler
