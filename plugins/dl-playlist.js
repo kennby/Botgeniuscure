@@ -32,11 +32,12 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
         type: 1
     })))
 
-    await conn.sendMessage(m.chat, '  ≡ *FG MUSIC*🔎\n\n 📀 Resultados de:\n' + text, 'buttonsMessage', { buttons }, m)
+    let message = `  ≡ *FG MUSIC*🔎\n\n 📀 Resultados de:\n*${text}*`
+    await conn.sendMessage(m.chat, message, 'buttonsMessage', { buttons }, m)
 }
 handler.help = ['play2']
 handler.tags = ['dl']
 handler.command = ['play2', 'playvid2', 'playlist', 'playlista']
-//handler.disabled = false
+handler.disabled = false
 
 export default handler
