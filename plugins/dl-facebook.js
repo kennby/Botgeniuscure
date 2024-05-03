@@ -4,7 +4,7 @@ const handler = async (m, { conn, args }) => {
     if (!args[0]) throw `Por favor, ingrese un enlace de Facebook.`;
 
     try {
-        const apiUrl = `https://api.lolhuman.xyz/api/facebook?apikey=Gatadios&url=${encodeURIComponent(args[0])}`;
+        const apiUrl = `https://api.lolhuman.xyz/api/facebook?apikey=Gata_Dios&url=${encodeURIComponent(args[0])}`;
         const response = await fetch(apiUrl);
 
         if (response.ok) {
